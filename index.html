@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -23,6 +23,54 @@
         </div>
         <p id="current-time">Current time: </p>
     </div>
+    <script src="index.js"></script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimerJS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Primer Temporizador -->
+    <section class="base">     
+        <div class="container">
+            <h1>TIMER 1</h1>
+            <div class="input">
+                <input type="number" id="hours1" placeholder="Hours" min="0" max="24">
+                <input type="number" id="minutes1" placeholder="Minutes" min="0" max="60">
+                <input type="number" id="seconds1" placeholder="Seconds" min="0" max="60">
+            </div>
+            <div class="buttons">
+                <button id="start1">Start</button>
+                <button id="stop1">Stop</button>
+                <button id="reset1">Reset</button>
+            </div>
+            <p id="current-time1">Current time: </p>
+        </div>
+    
+        <!-- Segundo Temporizador -->
+        <div class="container">
+            <h1>TIMER 2</h1>
+            <div class="input">
+                <input type="number" id="hours2" placeholder="Hours" min="0" max="24">
+                <input type="number" id="minutes2" placeholder="Minutes" min="0" max="60">
+                <input type="number" id="seconds2" placeholder="Seconds" min="0" max="60">
+            </div>
+            <div class="buttons">
+                <button id="start2">Start</button>
+                <button id="stop2">Stop</button>
+                <button id="reset2">Reset</button>
+            </div>
+            <p id="current-time2">Current time: </p>
+        </div>
+    </section>
+
     <script src="index.js"></script>
 </body>
 

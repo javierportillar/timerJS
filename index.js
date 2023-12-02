@@ -1,5 +1,4 @@
-/*Timer with only one input
-
+/* Timer with only one input
 Declaración de variables para los botones
 const start = document.querySelector("#start");
 const stop = document.querySelector("#stop");
@@ -142,21 +141,96 @@ class Timer {
     this.setInitialValues();
   }
 
-  start() {}
+  updateDisplay(h, m, s) {
+    this.hoursElem.value = h;
+    this.minutesElem.value = m;
+    this.secondsElem.value = s;
+    h = h.toString();
+    m = m.toString();
+    s = s.toString();
 
-  decrementTime() {}
+    this.display.innerHTML = `Current time: ${h}h:${m}m:${s}s`;
+  }
 
-  stop() {}
+  decrementTime() {
+    let h = parseInt(this.hoursElem.value) || 0;
+    let m = parseInt(this.minutesElem.value) || 0;
+    let s = parseInt(this.secondsElem.value) || 0;
 
-  reset() {}
+    if (s > 0) {
+      s--;
+    } else {
+      if (m > 0) {
+        s = 59;
+        m--;
+      } else if (h > 0) {
+        m = 59;
+        s = 59;
+        h--;
+      } else {
+        this.stop();
+        this.setInitialValues();
+        alert("Timer finished!");
+        return;
+      }
+    }
 
-  setInitialValues() {}
+    this.updateDisplay(h, m, s);
+  }
 
-  disableInputs() {}
+  setInitialValues() {
+    this.hoursElem.value = 0;
+    this.minutesElem.value = 0;
+    this.secondsElem.value = 0;
+    this.enableInputs();
+  }
 
-  enableInputs() {}
+  disableInputs() {
+    this.hoursElem.disabled = true;
+    this.minutesElem.disabled = true;
+    this.secondsElem.disabled = true;
+  }
 
-  updateDisplay(h, m, s) {}
+  enableInputs() {
+    this.hoursElem.disabled = false;
+    this.minutesElem.disabled = false;
+    this.secondsElem.disabled = false;
+  }
+
+  start() {
+    this.disableInputs();
+    let h = parseInt(this.hoursElem.value) || 0;
+    let m = parseInt(this.minutesElem.value) || 0;
+    let s = parseInt(this.secondsElem.value) || 0;
+
+    if (
+      h < 0 ||
+      m < 0 ||
+      s < 0 ||
+      m > 59 ||
+      s > 59 ||
+      (h === 0 && m === 0 && s === 0)
+    ) {
+      alert("Please enter a valid time");
+      this.enableInputs();
+      return;
+    }
+
+    if (!this.time) {
+      this.time = setInterval(() => this.decrementTime(), 1000);
+    }
+  }
+
+  stop() {
+    this.time = null;
+    this.enableInputs();
+  }
+
+  reset() {
+    this.setInitialValues();
+    this.display.innerHTML = `Current time:`;
+    this.stop();
+  }
 }
 
 const timer1 = new Timer("#hours1", "#minutes1", "#seconds1", "#current-time1");
@@ -176,4 +250,3 @@ document.querySelector("#stop2").addEventListener("click", () => timer2.stop());
 document
   .querySelector("#reset2")
   .addEventListener("click", () => timer2.reset());
-

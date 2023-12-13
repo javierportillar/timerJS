@@ -1,66 +1,53 @@
-#  Timer JS
+# Timer JS
 
-### This is an simple JS Timer project that was implemented with a Timer class to include over 1 Timer easily
+### Introduction
+This project is a simple JavaScript Timer, implemented using a Timer class. This design allows for easily including more than one timer instance.
 
-## Steps
+## Implementation Steps
 
-### HTML code
-The HTML code was created with a section class named base, it includes both divs Timer
-with class name container.
+### HTML Code
+The HTML structure consists of a `section` class named `base`, containing two `div` elements with the class `container`. Each `div` comprises:
+- Three input fields for Hours, Minutes, and Seconds, respectively.
+- Three buttons for starting, stopping, and resetting the timer.
+- A text display labeled "Current time:" which shows the remaining time once the Start button is activated.
 
-Each div contains 3 inputs numbers and 3 buttons.
-Each input is for Hours, Minutes and Seconds respectively
-Each button is for start, stop and reset the timer.
+### CSS Code
+The CSS styling arranges the two `div` containers in a column layout. The input fields and buttons are individually styled with specific padding and margins as needed.
 
-After that its a simple text "Current time:" That shows the time remaining when the Start button its activated.
+### JavaScript Code
+The JavaScript functionality is encapsulated in a class named `Timer`. This class accepts hours, minutes, seconds, and a display parameter for initializing object instances. It includes various functions developed for handling timer actions.
 
+#### start()
+The `start()` function initiates by calling `disableInputs()`. It then creates variables `h`, `m`, and `s` to capture the input values for a new timer instance. It checks that `h`, `m`, and `s` are positive and that `m` and `s` are not greater than 59. If the values are invalid, an alert "Please enter a valid time" is shown, and the inputs and buttons are re-enabled.
 
-### CSS code
+Start fcn check if there is a previous time running, in case that it's clicked it disable the start button. If its clicked, in case that it's running, it clear the interval to not have over 1 interval running, it makes this.decrementTime() be called over once, speeding up the time.
 
-The CSS code was implemented doing the 2 div container in column.
+If the time is valid, a variable is set to invoke the `decrementTime()` function every second.
 
-the inputs and buttons have their own styles, with a respective paddin and margin in some cases.
+#### decrementTime()
+`decrementTime()` sets the variables `h`, `m`, and `s` based on the HTML input elements. The logic:
+- Decrements `s` if it's greater than zero.
+- If `s` reaches zero, checks `m`; if `m` is greater than zero, sets `s` to 59 and decrements `m`.
+- If both `s` and `m` are zero, checks `h`; if `h` is greater than zero, sets both `s` and `m` to 59 and decrements `h`.
+- If `h`, `m`, and `s` are all zero, it calls `this.stop()`, `this.setInitialValues()`, and shows an alert "Timer finished!".
 
+The display is updated with `this.updateDisplay(h, m, s)`.
 
-### JavaScript code
+#### setInitialValues()
+Sets the timer elements (hours, minutes, seconds) to 0 and calls `this.enableInputs()`.
 
-The JS code was implemented with one class called Timer, this class receibes hours, minutes, senconds and display as parametres for receibing the values of the object when its instantiated, the class also includes some fcn that were developed for the actions.
+#### disableInputs()
+Disables manual timer adjustments when the timer is active.
 
-#### star()
-start fcn begins iniciating another fcn called disableInputs. Then h,m,s variables were created to get the value of the inputs for the new object (new timer).
-It check that the value of h,m and s are over 0 and also that m and s cant be over 59. If that's the case it will trow "Please enter a valid time" alert and enable the inputs and buttos for the timer.
+#### enableInputs()
+Enables manual adjustments for the timer inputs.
 
-In case that the time is correct, it will create a variable that begins decrementTime fcn with an time interval of 1 second.
+#### updateDisplay(h, m, s)
+Accepts `h`, `m`, and `s` as parameters and updates the HTML elements with these values.
 
-### decrementTime()
-decrementTime create the same variables h,m,s that receives the value of the HTML input element.
+#### stop()
+Stops the timer by setting the `time` variable to null. This variable controls the timer's operation.
+It was added clearInterval(this.time) to be sure that the interval is completly stopped.
 
-The logic was implemented checking if the seconds (s) are greater than zero. If so, it decrements the seconds by one. This is the basic countdown operation, decreasing the seconds every time this code runs.
-
-If the seconds are not greater or equal to zero (s >= 0), the else block is executed.
-The first if inside this block checks if the minutes (m) are greater than zero. If true, it sets the seconds (s) to 59, effectively moving to the last second of the previous minute, and decrements the minute count by one.
-
-If the minutes (m) are also zero, the else if statement checks if the hours (h) are greater than zero. If this is the case, it sets both seconds (s) and minutes (m) to 59, indicating the transition to the last minute of the previous hour, and decrements the hour (h).
-
-Finally if hours (h), minutes (m), and seconds (s) are all zero, it means the timer has finished its countdown. 
-So then it's called this.stop() to stop the timer, this.setInitialValues() to reset the timer values, and displays an alert with the message "Timer finished!".
-
-Then it calls this.updateDisplay(h, m, s) to update the h,m and seconds respectively.
-
-### setInitialValues()
-This fcn was implemented to set 0 on the elements (hours, minutes and seconds) And then it calls this.enableInputs().
-
-### disableInputs()
-This fcn was implemented to disable the option to set manually the timer when it's turned on
-
-### enableInputs()
-This fcn was implemented to enlable set option for inputs hours, minutes and seconds.
-
-### updateDisplay(h, m, s)
-This fcn receibes as params the data of variables h,m and s, this was implemented to set the value of the data on the HTML elements.
-
-### stop()
-This fcn was implemented to stop the timer, it works setting null into time variable. this is the variable in charge of running the timer or stop it
-
-### reset()
-This fcn was implemented to reset the timer, in case that its activaded, it will call this.setInitialValues(), into the display selector it clear the data value and finally the timer it's stopped. 
+#### reset()
+Resets the timer. If active, it calls `this.setInitialValues()`, clears the display data, and stops the timer.

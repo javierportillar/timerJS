@@ -1,4 +1,3 @@
-//Multiple Timers
 class Timer {
   constructor(
     hoursSelector,
@@ -55,32 +54,24 @@ class Timer {
   }
 
   setInitialValues() {
-    this.hoursElem.value = 0;
-    this.minutesElem.value = 0;
-    this.secondsElem.value = 0;
-    this.enableInputs();
+    this.updateDisplay(0, 0, 0);
+    this.toggleInputs(false);
   }
 
-  disableInputs() {
-    this.hoursElem.disabled = true;
-    this.minutesElem.disabled = true;
-    this.secondsElem.disabled = true;
-  }
-
-  enableInputs() {
-    this.hoursElem.disabled = false;
-    this.minutesElem.disabled = false;
-    this.secondsElem.disabled = false;
+  toggleInputs(enable) {
+    this.hoursElem.disabled = enable;
+    this.minutesElem.disabled = enable;
+    this.secondsElem.disabled = enable;
+    this.startButton.disabled = enable;
   }
 
   start() {
-    this.disableInputs();
-    this.startButton.disabled = true;
-
+    this.toggleInputs(true);
+    
     let h = parseInt(this.hoursElem.value) || 0;
     let m = parseInt(this.minutesElem.value) || 0;
     let s = parseInt(this.secondsElem.value) || 0;
-
+    
     if (
       h < 0 ||
       m < 0 ||
@@ -88,9 +79,9 @@ class Timer {
       m > 59 ||
       s > 59 ||
       (h === 0 && m === 0 && s === 0)
-    ) {
-      alert("Please enter a valid time");
-      this.enableInputs();
+      ) {
+        alert("Please enter a valid time");
+        this.toggleInputs(false);
       return;
     }
 
@@ -101,48 +92,26 @@ class Timer {
   }
 
   stop() {
-    this.startButton.disabled = false;
     if (this.time) {
       clearInterval(this.time);
       this.time = null;
     }
-    this.enableInputs();
+    this.toggleInputs(false);
   }
 
   reset() {
-    this.startButton.disabled = false;
     this.setInitialValues();
     this.display.innerHTML = `Current time:`;
     this.stop();
   }
 }
 
-const timer1 = new Timer(
-  "#hours1",
-  "#minutes1",
-  "#seconds1",
-  "#current-time1",
-  "#start1"
-);
-document
-  .querySelector("#start1")
-  .addEventListener("click", () => timer1.start());
-document.querySelector("#stop1").addEventListener("click", () => timer1.stop());
-document
-  .querySelector("#reset1")
-  .addEventListener("click", () => timer1.reset());
+function createTimer(hours, minutes, seconds, currentTime, start, stop, reset) {
+  const timer = new Timer(hours, minutes, seconds, currentTime, start);
+  document.querySelector(start).addEventListener("click", () => timer.start());
+  document.querySelector(stop).addEventListener("click", () => timer.stop());
+  document.querySelector(reset).addEventListener("click", () => timer.reset());
+}
 
-const timer2 = new Timer(
-  "#hours2",
-  "#minutes2",
-  "#seconds2",
-  "#current-time2",
-  "#start2"
-);
-document
-  .querySelector("#start2")
-  .addEventListener("click", () => timer2.start());
-document.querySelector("#stop2").addEventListener("click", () => timer2.stop());
-document
-  .querySelector("#reset2")
-  .addEventListener("click", () => timer2.reset());
+createTimer("#hours1", "#minutes1", "#seconds1", "#current-time1", "#start1", "#stop1", "#reset1");
+createTimer("#hours2", "#minutes2", "#seconds2", "#current-time2", "#start2", "#stop2", "#reset2");

@@ -103,6 +103,7 @@ class Timer {
     this.setInitialValues();
     this.display.innerHTML = `Current time:`;
     this.stop();
+    this.updateDisplay(0, 0, 0);
   }
 }
 

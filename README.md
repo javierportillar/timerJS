@@ -18,7 +18,7 @@ The CSS styling arranges the two `div` containers in a column layout. The input 
 The JavaScript functionality is encapsulated in a class named `Timer`. This class accepts hours, minutes, seconds, and a display parameter for initializing object instances. It includes various functions developed for handling timer actions.
 
 #### start()
-The `start()` function initiates by calling `disableInputs()`. It then creates variables `h`, `m`, and `s` to capture the input values for a new timer instance. It checks that `h`, `m`, and `s` are positive and that `m` and `s` are not greater than 59. If the values are invalid, an alert "Please enter a valid time" is shown, and the inputs and buttons are re-enabled.
+The `start()` function initiates by calling `toggleInputs()`. It then creates variables `h`, `m`, and `s` to capture the input values for a new timer instance. It checks that `h`, `m`, and `s` are positive and that `m` and `s` are not greater than 59. If the values are invalid, an alert "Please enter a valid time" is shown, and the inputs and buttons are re-enabled.
 
 Start fcn check if there is a previous time running, in case that it's clicked it disable the start button. If its clicked, in case that it's running, it clear the interval to not have over 1 interval running, it makes this.decrementTime() be called over once, speeding up the time.
 
@@ -34,13 +34,10 @@ If the time is valid, a variable is set to invoke the `decrementTime()` function
 The display is updated with `this.updateDisplay(h, m, s)`.
 
 #### setInitialValues()
-Sets the timer elements (hours, minutes, seconds) to 0 and calls `this.enableInputs()`.
+Sets the timer elements (hours, minutes, seconds) to 0 and calls `this.toggleInputs()` to enable the inputs.
 
-#### disableInputs()
-Disables manual timer adjustments when the timer is active.
-
-#### enableInputs()
-Enables manual adjustments for the timer inputs.
+#### toggleInputs()
+Disables and Enables manual timer adjustments when the timer is active.
 
 #### updateDisplay(h, m, s)
 Accepts `h`, `m`, and `s` as parameters and updates the HTML elements with these values.
